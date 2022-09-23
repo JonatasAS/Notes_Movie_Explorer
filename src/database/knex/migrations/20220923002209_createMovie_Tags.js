@@ -1,0 +1,12 @@
+
+exports.up = knex => knex.schema.createTable("movie_tags", table => {
+  table.increment("id");
+  table.text("name").notNullable();
+
+  table.integer("movie_note_id").reference("id").inTable("movie_notes");onDelete("CASCADE");
+  table.integer("user_id").reference("id").inTable("users");
+});
+
+
+
+exports.down = knex => knex.schema.dropTable("movie_tags");
