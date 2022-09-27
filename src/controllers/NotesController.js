@@ -29,14 +29,22 @@ class NotesController {
     const { id } = request.params;
 
     const note = await knex("movie_notes").where({ id }).first();
-    const tags = await knex("movie_tags").where({ note_id: id }).orderBy("name");
+    const tags = await knex("movie_tags").where({ movie_note_id: id }).orderBy("name");
   
     return response.json({
         ...note,
-        tags,
-    
+        tags
     });
 }
+
+  async delete(request, response) {
+    const { id } = request.params
+
+    await knex("notes").where({ id }).delete();
+
+    return response.json()
+  }
+ 
 }
 
 module.exports = NotesController;
